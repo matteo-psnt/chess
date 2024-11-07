@@ -3,7 +3,7 @@
 #include <iostream>
 
 SFMLWindow::SFMLWindow(int width, int height) 
-    : window(sf::VideoMode(width, height), "SFML Window") {
+    : window(sf::VideoMode(width, height), "Chess Game") {
 
     // Set up colours.
     colours[White] = sf::Color::White;
@@ -26,7 +26,6 @@ void SFMLWindow::fillRectangle(int x, int y, int width, int height, int colour) 
     rect.setPosition(x, y);
     rect.setFillColor(colours[colour]);
     window.draw(rect);
-    window.display();
 }
 
 void SFMLWindow::drawString(int x, int y, std::string msg, int colour) {
@@ -44,7 +43,46 @@ void SFMLWindow::drawString(int x, int y, std::string msg, int colour) {
     text.setPosition(x, y);
 
     window.draw(text);
-    window.display();
+}
+
+std::unordered_map<char, char> pieceSymbolMap = {
+    {'K', 'k'}, // White King
+    {'Q', 'q'}, // White Queen
+    {'R', 'r'}, // White Rook
+    {'B', 'b'}, // White Bishop
+    {'N', 'h'}, // White Knight
+    {'P', 'p'}, // White Pawn
+    {'k', 'l'}, // Black King
+    {'q', 'w'}, // Black Queen
+    {'r', 't'}, // Black Rook
+    {'b', 'n'}, // Black Bishop
+    {'n', 'j'}, // Black Knight
+    {'p', 'o'}  // Black Pawn
+};
+
+void SFMLWindow::drawPeice(int x, int y, char piece, int colour) {
+    sf::Font font;
+    if (!font.loadFromFile("./assets/CHEQ_TT.TTF")) {
+        std::cerr << "Error loading font\n";
+        return;
+    }
+
+    sf::Text text;
+    text.setFont(font);
+    
+    // Use mapped character for the piece
+    auto it = pieceSymbolMap.find(piece);
+    if (it != pieceSymbolMap.end()) {
+        text.setString(std::string(1, it->second));
+    } else {
+        text.setString(std::string(1, piece));
+    }
+
+    text.setCharacterSize(50);
+    text.setFillColor(colours[colour]);
+    text.setPosition(x, y);
+
+    window.draw(text);
 }
 
 void SFMLWindow::processEvents() {
@@ -54,4 +92,12 @@ void SFMLWindow::processEvents() {
             window.close();
         }
     }
+}
+
+void SFMLWindow::clear(int colour) {
+    window.clear(colours[colour]);
+}
+
+void SFMLWindow::display() {
+    window.display();
 }

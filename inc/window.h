@@ -19,8 +19,10 @@ public:
 
     void fillRectangle(int x, int y, int width, int height, int colour=Black);
     void drawString(int x, int y, std::string msg, int colour=Black);
+    void drawPeice(int x, int y, char piece, int colour);
     void processEvents();
-    bool isOpen() const;
+    void clear(int colour);
+    void display();
 };
 
 #endif

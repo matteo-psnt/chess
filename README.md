@@ -6,7 +6,7 @@ This project is a C++ implementation of a chess game with both graphical and con
 
 ## Features
 
-- **Graphical Display**: Utilizes X11 to render the chessboard and pieces.
+- **Graphical Display**: Utilizes SFML to render the chessboard and pieces.
 - **Console Display**: Outputs the chessboard state and status messages to the console.
 - **Human Player Support**: Allows two human players to play against each other.
 - **AI Player Support**: Includes multiple levels of AI difficulty:
@@ -17,11 +17,31 @@ This project is a C++ implementation of a chess game with both graphical and con
 - **Special Moves**: Supports castling and pawn promotion.
 - **Game State Checking**: Identifies check, checkmate, and stalemate conditions.
 
+## Graphical Display Preview
+
+![Chess Game](docs/window_preview.png)
+
+## Example Console Output
+
+```plaintext
+Enter command: game human human
+New game started between Human (White) and Human (Black).
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ 
+7 ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ 
+6 . . . . . . . . 
+5 . . . . . . . . 
+4 . . . . . . . . 
+3 . . . . . . . . 
+2 ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ 
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ 
+  a b c d e f g h
+```
+
 ## Prerequisites
 
 - **C++ Compiler**: Ensure you have a C++14 compatible compiler installed.
 - **Make**: Used for building the project.
-- **X11 Development Libraries**: Required for graphical display.
+- **SFML Development Libraries**: Required for graphical display.
 
 ### Installing Prerequisites on macOS
 
@@ -31,10 +51,10 @@ This project is a C++ implementation of a chess game with both graphical and con
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-2. **XQuartz**: Install XQuartz to get X11 libraries.
+2. **SFML**: Install SFML to get the necessary libraries.
 
    ```sh
-   brew install --cask xquartz
+   brew install sfml
    ```
 
 3. **Make**: Install Make.
@@ -48,8 +68,8 @@ This project is a C++ implementation of a chess game with both graphical and con
 1. **Clone the Repository**:
 
    ```sh
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/matteo-psnt/chess.git
+   cd chess
    ```
 
 2. **Build the Project**:
@@ -80,7 +100,7 @@ After building the project, run the executable:
 - **pieces.h / pieces.cc**: Defines the different types of chess pieces and their movement logic.
 - **player.h / player.cc**: Abstract class for players and derived classes for human and AI players.
 - **gamemanager.h / gamemanager.cc**: Manages game initialization, player setup, and command processing.
-- **display.h / display.cc**: Handles graphical display using X11.
+- **display.h / display.cc**: Handles graphical display using SFML.
 - **position.h**: Defines the Position struct used to represent coordinates on the board.
 - **playeraction.h**: Defines the playerAction struct used to represent and score potential moves.
 
@@ -90,6 +110,8 @@ The game accepts the following commands:
 
 - **game [whitePlayerType] [blackPlayerType]**: Starts a new game with specified player types (human or computer[1-4]).
 - **setup**: Enters setup mode to manually set up the board.
+- **move [start_position] [end_position] [optional_promotion]**: Moves a piece from the start position to the end position. For pawn promotions, specify the promotion piece (e.g., move e7 e8 Q to promote to a queen).
+- print: Displays the current state of the board in the console.
 
 ## Example Usage
 
@@ -110,3 +132,17 @@ The game accepts the following commands:
    ```sh
    setup
    ```
+
+4. **Move a Piece**:
+
+   ```sh
+   move a2 a4
+   ```
+
+5. **Pawn Promotion**:
+
+   ```sh
+   move a7 a8 Q
+   ```
+
+   > Default promotion is to queen if no piece type is specified.

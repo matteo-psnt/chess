@@ -6,6 +6,7 @@ Game::Game(Board board, std::unique_ptr<Player>&& whitePlayer, std::unique_ptr<P
     : board(board), whitePlayer(std::move(whitePlayer)), blackPlayer(std::move(blackPlayer)), outcome(GameOutcome::Running), display(board) {}
 
 void Game::runGame() {
+    display.updateStatus("New game started!");
     while (!isGameOver()) {
         display.processEvents(); // Ensure the window processes events
         board.printBoard();

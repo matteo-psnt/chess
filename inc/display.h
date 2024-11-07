@@ -8,6 +8,7 @@
 class GraphicalDisplay {
     SFMLWindow window;
     Board board;
+    std::string statusMessage;
 
 public:
     GraphicalDisplay(Board board);

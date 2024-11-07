@@ -79,11 +79,32 @@ void Board::clearBoard() {
 }
 
 void Board::printBoard() const {
+    std::unordered_map<char, std::string> unicodeSymbols = {
+        {'K', "\u2654"}, // White King
+        {'Q', "\u2655"}, // White Queen
+        {'R', "\u2656"}, // White Rook
+        {'B', "\u2657"}, // White Bishop
+        {'N', "\u2658"}, // White Knight
+        {'P', "\u2659"}, // White Pawn
+        {'k', "\u265A"}, // Black King
+        {'q', "\u265B"}, // Black Queen
+        {'r', "\u265C"}, // Black Rook
+        {'b', "\u265D"}, // Black Bishop
+        {'n', "\u265E"}, // Black Knight
+        {'p', "\u265F"}  // Black Pawn
+    };
+
     for (int y = 7; y >= 0; --y) {
         std::cout << y + 1 << " ";
         for (int x = 0; x < 8; ++x) {
             if (squares[y][x]) {
-                std::cout << squares[y][x]->getSymbol() << " ";
+                char symbol = squares[y][x]->getSymbol();
+                auto it = unicodeSymbols.find(symbol);
+                if (it != unicodeSymbols.end()) {
+                    std::cout << it->second << " "; // Print Unicode symbol
+                } else {
+                    std::cout << symbol << " "; // Fallback if no mapping is found
+                }
             } else {
                 std::cout << ". ";
             }
@@ -92,6 +113,7 @@ void Board::printBoard() const {
     }
     std::cout << "  a b c d e f g h" << std::endl;
 }
+
 
 bool Board::isWhiteTurn() const {
     return whiteTurn;

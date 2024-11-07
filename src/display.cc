@@ -3,44 +3,42 @@
 GraphicalDisplay::GraphicalDisplay(Board board)
     : window(400, 450), board(board)
 {
-    int squareSize = 50;
-    for (int y = 0; y < 8; ++y) {
-        for (int x = 0; x < 8; ++x) {
-            bool isWhiteSquare = (x + y) % 2 == 0;
-            window.fillRectangle(x * squareSize, y * squareSize, squareSize, squareSize, isWhiteSquare ? SFMLWindow::White : SFMLWindow::Black);
-            auto Piece = board.at(Position(x, y));
-            if (Piece) {
-                window.drawString(x * squareSize + 20, y * squareSize + 30, std::string(1, Piece->getSymbol()), isWhiteSquare ? SFMLWindow::Black : SFMLWindow::White);
-            }
-        }
-    }
+    drawBoard(board);
 }
 
 void GraphicalDisplay::drawBoard(const Board &newBoard)
 {
+    window.clear(SFMLWindow::White);
     int squareSize = 50;
-    for (int y = 0; y < 8; ++y) {
-        for (int x = 0; x < 8; ++x) {
-            auto oldPiece = board.at(Position(x, y));
+
+    for (int y = 0; y < 8; ++y)
+    {
+        for (int x = 0; x < 8; ++x)
+        {
+            bool isWhiteSquare = (x + y) % 2 == 0;
+            window.fillRectangle(x * squareSize, (7 - y) * squareSize, squareSize, squareSize, isWhiteSquare ? SFMLWindow::White : SFMLWindow::Black);
+
             auto newPiece = newBoard.at(Position(x, y));
-            if ((oldPiece && (!newPiece || oldPiece->getSymbol() != newPiece->getSymbol())) ||
-                (!oldPiece && newPiece)) {
-                bool isWhiteSquare = (x + y) % 2 == 0;
-                window.fillRectangle(x * squareSize, y * squareSize, squareSize, squareSize, isWhiteSquare ? SFMLWindow::White : SFMLWindow::Black); // Clear the square
-                if (newPiece) {
-                    window.drawString(x * squareSize + 20, y * squareSize + 30, std::string(1, newPiece->getSymbol()), isWhiteSquare ? SFMLWindow::Black : SFMLWindow::White);
-                }
+            if (newPiece)
+            {
+                window.drawPeice(x * squareSize, (7 - y) * squareSize - 5, newPiece->getSymbol(), isWhiteSquare ? SFMLWindow::Black : SFMLWindow::White);
             }
         }
     }
+    
+    window.fillRectangle(0, 400, 400, 50, SFMLWindow::White);
+    window.drawString(10, 410, statusMessage, SFMLWindow::Black);
+
+    window.display();
     board = newBoard;
 }
 
 void GraphicalDisplay::updateStatus(const std::string &status) {
-    window.fillRectangle(0, 400, 400, 50, SFMLWindow::White);
-    window.drawString(10, 430, status, SFMLWindow::Black);
+    statusMessage = status;
+    drawBoard(board);
 }
 
-void GraphicalDisplay::processEvents() {
+void GraphicalDisplay::processEvents()
+{
     window.processEvents();
 }
