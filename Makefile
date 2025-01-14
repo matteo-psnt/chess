@@ -2,8 +2,8 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -std=c++14 -Iinc -I/opt/homebrew/opt/sfml/include -Wall -Wextra
-LDFLAGS = -L/opt/homebrew/opt/sfml/lib -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -std=c++14 -Iinc -I/opt/homebrew/opt/sfml@2/include -Wall -Wextra
+LDFLAGS = -L/opt/homebrew/opt/sfml@2/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source and header files
 SRC = $(wildcard src/*.cc)

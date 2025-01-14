@@ -54,7 +54,7 @@ New game started between Human (White) and Human (Black).
 2. **SFML**: Install SFML to get the necessary libraries.
 
    ```sh
-   brew install sfml
+   brew install sfml@2
    ```
 
 3. **Make**: Install Make.
